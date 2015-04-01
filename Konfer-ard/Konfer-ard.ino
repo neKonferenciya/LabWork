@@ -15,7 +15,7 @@
 
 // the setup routine runs once when you press reset:
 void setup() {
-  Serial.begin(57600);
+  Serial.begin(9600);
   DDRB = B00001111;  //пины порт В на выход (пины 8-11)
   DDRD = B11110000;  //пины порт D на выход (пины 4-7)
   

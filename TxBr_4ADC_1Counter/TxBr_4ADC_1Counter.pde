@@ -19,7 +19,7 @@ int bufC = 0;      //bufer for counter
 
 void setup()
 {      
-    COMport = new Serial(this, Serial.list()[2], 57600);    //make connect
+    COMport = new Serial(this, Serial.list()[2], 9600);    //make connect
   
   size (1320, 620);
   restart();
@@ -42,7 +42,14 @@ void draw()
  speed = (1000*bufC/float(rot))/(t-t0);
  
     if (countb)
-    {counb = plot_draw(660,400,640,150,((counA%256)*150/256),counb);}        //Show counter-plot
+      if (counA<0)
+      {
+      {counb = plot_draw(660,400,640,150,(150+(counA%256)*150/256),counb);}        //Show negativ counter-plot
+      }
+      else
+      {
+      {counb = plot_draw(660,400,640,150,((counA%256)*150/256),counb);}        //Show positiv counter-plot
+      }
     else
     {speedb = plot_draw(660,400,640,150,(-speed*150/50+150/2),speedb);
     }
