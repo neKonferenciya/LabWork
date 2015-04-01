@@ -4,6 +4,8 @@ void restart()
   
   if (play)
   {
+    counA = 0;              //reset counter
+    
   background(0x735184);
   fill(255);
   textSize(15);
