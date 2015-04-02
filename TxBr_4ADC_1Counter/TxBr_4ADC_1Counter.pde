@@ -33,7 +33,7 @@ void draw()
   t = (millis()%int(float(maxs)*1000));    //new Time
   if (play)
   {                                                    //refresh of text
-  text_canva(adc1*5*float(s1)/256,adc2*5*float(s2)/256,adc3*5*float(s3)/256,adc4*5*float(s4)/256);  
+  text_canva(adc1*5/256,adc2*5/256,adc3*5/256,adc4*5/256);  
   adc1b = plot_draw(10,5,640,150,adc1*(1/float(s1))*150/256,adc1b);
   adc2b = plot_draw(660,5,640,150,adc2*(1/float(s2))*150/256,adc2b);
   adc3b = plot_draw(10,200,640,150,adc3*(1/float(s3))*150/256,adc3b);

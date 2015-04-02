@@ -1,19 +1,8 @@
-String s1 = "1";
-boolean sb1 = false;
-String s2 = "1";
-boolean sb2 = false;
-String s3 = "1";
-boolean sb3 = false;
-String s4 = "1";
-boolean sb4 = false;
-String rot = "300";
-boolean rotb = false;
-String maxs = "5";           //max second limite
-boolean timb = false;     
-
-String entertext(String s)        //Function for entering text
+String enter_text(String s, boolean sb)        //Function for entering text
 {
-     if ((key>='0')&&(key<='9')&&(s.length()<4)||(key==46))
+  if (sb)
+  {
+     if (((key>='0')&&(key<='9')&&(s.length()<20)||(key==46))||((key>='a')&&(key<='z')&&(s.length()<20)))
     {
     s+=key;
     }
@@ -22,11 +11,12 @@ String entertext(String s)        //Function for entering text
     {
     s = s.substring(0,s.length()-1);
     } 
+  } 
     return s;
 }
 
 
-boolean textrect(int x, int y, int xh, int yh, String s, boolean sb, String comm)    
+boolean text_rect(int x, int y, int xh, int yh, String s, boolean sb)    
 {                                              //function for drawing rect-text
   fill(#735184); 
   stroke(255);
@@ -42,7 +32,7 @@ boolean textrect(int x, int y, int xh, int yh, String s, boolean sb, String comm
   
   fill(255);
   textSize(15);                         //Block of output text
-  text(comm+s, x+5, y+16);
+  text(s, x+5, y+16);
   
   return sb;
 }
