@@ -86,6 +86,7 @@ void keyPressed()                        // STOP-interrapt
      textSize(60);
      fill(#ff0000);
      text("ПАУЗА", 190, 480); 
+     counA=0;
    restart();  
    }
    
