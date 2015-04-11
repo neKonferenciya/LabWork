@@ -12,10 +12,11 @@ float adc4b = 0;
 float counA = 0;
 float counb = 0;
 float t = 0;        //global var of universal time
-float t0 = 0;
-int test = 0; 
+float t0 = 0; 
 boolean play = true;
 int bufC = 0;      //bufer for counter
+int Udac = 0;        //ADC-voltag
+float tdac = 0;
 
 void setup()
 {      
@@ -30,14 +31,23 @@ void draw()
   if (play)
   {
   
-  t = (millis()%int(float(maxs)*1000));    //new Time
+  t = (millis()%(int(float(maxs)*1000)));    //new Time
+  tdac = (float(millis())/1000)%float(maxs);
+  
+  float k256 = 256/5;
+  Udac = int(float(A)*k256*sin(float(Om)*tdac+float(B)*tdac*tdac)+(tdac*float(C)*k256*cos(float(Om)*tdac))%256+float(dU)*k256);
+    if (Udac<0)
+    {Udac = 0;};
+    if (Udac>256)      //U(DAC) limit
+    {Udac = 256;}
+  
   if (play)
   {                                                    //refresh of text
   text_canva(adc1*5/256,adc2*5/256,adc3*5/256,adc4*5/256);  
   adc1b = plot_draw(10,5,640,150,adc1*(1/float(s1))*150/256,adc1b);
   adc2b = plot_draw(660,5,640,150,adc2*(1/float(s2))*150/256,adc2b);
   adc3b = plot_draw(10,200,640,150,adc3*(1/float(s3))*150/256,adc3b);
-  adc4b = plot_draw(660,200,640,150,(adc4*(1/float(s4))*150/256),adc4b);
+  adc4b = plot_draw(660,200,640,150,(Udac*(1/float(s4))*150/256),adc4b);
  
  speed = (1000*bufC/float(rot))/(t-t0);
  
@@ -58,8 +68,7 @@ void draw()
      t0 = t;                               //old Time
  
  if (millis()%10 <= 5)
- {  test++;
-   com_talk();  }
+ { com_talk();  }
    
 
  
@@ -75,6 +84,11 @@ void draw()
   rotb = textrect(720, 560,80,25,rot,rotb,"rot=");
   timb = textrect(50, 400,80,25,maxs,timb,"T=");
   countb = rotor(1100, 560,80,25,countb,"СЧЕТЧИК");
+  Ab = textrect(500, 380,80,25,A,Ab,"A=");        //SIN options input
+  Bb = textrect(500, 420,80,25,B,Bb,"B=");
+  Cb = textrect(500, 460,80,25,C,Cb,"C=");
+  dUb = textrect(500, 500,80,25,dU,dUb,"U0=");
+  Omb = textrect(500, 540,80,25,Om,Omb,"Om=");
   
 }
 
@@ -106,8 +120,18 @@ void keyPressed()                        // STOP-interrapt
                   if (rotb)
                   {rot = entertext(rot);} 
                       if (timb)
-                      {maxs = entertext(maxs); 
-                      } 
+                      {maxs = entertext(maxs);} 
+      if (Ab)
+      {A = entertext(A);} 
+        if (Bb)
+        {B = entertext(B);} 
+          if (dUb)
+          {dU = entertext(dU);} 
+            if (Omb)
+            {Om = entertext(Om);} 
+              if (Cb)
+              {C = entertext(C);} 
+                      
  }                  
 }
 

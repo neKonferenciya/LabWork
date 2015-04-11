@@ -5,6 +5,7 @@ void restart()
   if (play)
   {
     //counA = 0;              //reset counter
+    tdac = 0;
     
   background(0x735184);
   fill(255);
@@ -14,6 +15,10 @@ void restart()
   text("HandMade by TxBr", 10, 600);
   text("ПС2-81, МВТУ", 10, 615);
   text("Serial: "+Serial.list()[2], 10, 573);
+  
+  fill(0);
+  text("ЦАП: U(t) = "+A+"*sin( "+Om+"*t+"+B+"*t*t) + "+C+"*t*cos("+Om+"*t) + "+dU,310,600);
+  
   plot_grid(10,5,640,150,1);          // make a plotgrids
   plot_grid(660,5,640,150,1);
   plot_grid(10,200,640,150,1);

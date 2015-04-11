@@ -11,9 +11,20 @@ boolean rotb = false;
 String maxs = "5";           //max second limite
 boolean timb = false;     
 
+String A = "2";        //SIN options
+boolean Ab = false;
+String B = "0";
+boolean Bb = false;
+String C = "0";
+boolean Cb = false;
+String dU = "2";
+boolean dUb = false;
+String Om = "3.14";
+boolean Omb = false;
+
 String entertext(String s)        //Function for entering text
 {
-     if ((key>='0')&&(key<='9')&&(s.length()<4)||(key==46))
+     if ((key>='0')&&(key<='9')&&(s.length()<4)||(key==46)||(key=='-'))
     {
     s+=key;
     }
