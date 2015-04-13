@@ -1,8 +1,6 @@
 boolean countb = false; 
 float speed = 0;
 float speedb = 0;
-//float count0 = 0;
-//float count1 = 0;
 float dcount = 0;
 
 boolean rotor(int x, int y, int xh, int yh, boolean sb, String comm)    

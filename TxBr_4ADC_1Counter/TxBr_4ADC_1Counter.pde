@@ -14,19 +14,24 @@ float counb = 0;
 float t = 0;        //global var of universal time
 float t0 = 0; 
 boolean play = true;
-int bufC = 0;      //bufer for counter
-int Udac = 0;        //ADC-voltag
-float tdac = 0;
+
+float ts = 0;                        //time for speed_plot
+int bufC = 0;                        //bufer for counter
+float[] speedbuf = new float[5];     //bufer for speed
+boolean speed_gr = false;            //draw speed graphic?
+int si = 0;                          //conter of bufer 
+
+int Udac = 0;            //DAC-voltag
+float tdac = 0;          //DAC time-counter
 
 void setup()
 {      
     COMport = new Serial(this, Serial.list()[2], 115200);    //make connect
-  
   size (1320, 620);
   restart();
 }
-                                                    //main body
-void draw()
+                                                    
+void draw()        //main body
 {
   if (play)
   {
@@ -49,7 +54,14 @@ void draw()
   adc3b = plot_draw(10,200,640,150,adc3*(1/float(s3))*150/256,adc3b);
   adc4b = plot_draw(660,200,640,150,(Udac*(1/float(s4))*150/256),adc4b);
  
- speed = (1000*bufC/float(rot))/(t-t0);
+ speedbuf[si] = (1000*bufC/float(rot))/(t-t0);
+ si++;
+ if (si==4)
+  {
+ speed = ((speedbuf[0])+(speedbuf[1])+(speedbuf[2])+(speedbuf[3])+(speedbuf[4]))/5;
+ si = 0;
+ speed_gr = true;
+ }
  
     if (countb)
       if (counA<0)
@@ -58,19 +70,27 @@ void draw()
       }
       else
       {
-      {counb = plot_draw(660,400,640,150,((counA%256)*150/256),counb);}        //Show positiv counter-plot
+      {counb = plot_draw(660,400,640,150,((counA%256)*150/256),counb);}            //Show positiv counter-plot
       }
     else
-    {speedb = plot_draw(660,400,640,150,(-speed*150/100+150/2),speedb);        //Show speed-plot (scale +/- 50 rot by sec)
+    {  
+      if (speed_gr)
+      {
+      speedb = speed_plot_draw(660,400,640,150,(-speed*150/100+150/2),speedb);        //Show speed-plot (scale +/- 50 rot by sec)
+      speed_gr = false;
+      
+        if ((t/1000)*640/float(maxs)>(640-10))
+        {ts = ts - 1000*float(maxs)+150;}
+        else
+        {ts = t;}
+      }
     }
   }
-
-     t0 = t;                               //old Time
  
+     
  if (millis()%10 <= 5)
- { com_talk();  }
-   
-
+ { com_talk();  }   
+     t0 = t;                               //old Time
  
    if ((float(maxs)*1000-(millis()%int(float(maxs)*1000)))<=20)
   {  
