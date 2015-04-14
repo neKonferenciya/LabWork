@@ -64,19 +64,12 @@ void draw()        //main body
  }
  
     if (countb)
-      if (counA<0)
-      {
-      {counb = plot_draw(660,400,640,150,(150+(counA%256)*150/256),counb);}        //Show negativ counter-plot
-      }
-      else
-      {
-      {counb = plot_draw(660,400,640,150,((counA%256)*150/256),counb);}            //Show positiv counter-plot
-      }
+      {counb = plot_draw(660,400,640,150,(-(counA%512)*150/512),counb);}            //Only positiv counter-plot
     else
     {  
       if (speed_gr)
       {
-      speedb = speed_plot_draw(660,400,640,150,(-speed*150/100+150/2),speedb);        //Show speed-plot (scale +/- 50 rot by sec)
+      speedb = speed_plot_draw(660,400,640,150,(-speed*150/100),speedb);        //Show speed-plot (scale +/- 50 rot by sec)
       speed_gr = false;
       
         if ((t/1000)*640/float(maxs)>(640-10))

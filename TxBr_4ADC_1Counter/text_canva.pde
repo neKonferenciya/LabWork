@@ -15,7 +15,7 @@ void text_canva(float num1, float num2, float num3, float num4)      //function 
      if (countb)
      {text("Counter= "+counA, 850, 580); }
      else
-     {text("Speed= "+speed, 850, 580);}
+     {text("Speed= "+float(round(speed*1000))/1000, 850, 580);}
 }
 //
   // 

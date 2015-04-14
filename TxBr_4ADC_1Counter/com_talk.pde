@@ -12,8 +12,7 @@ void com_talk()          //talking with COM-port
     buf1 = COMport.read();
     buf2 = COMport.read();
     
-    //if (bufC>128)
-    {bufC = buf1-buf2;}
+    bufC = buf1+buf2;      //encoder counter - 512 (256*2)
     
     counA = counA+bufC;
 }
