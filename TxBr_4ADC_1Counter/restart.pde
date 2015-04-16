@@ -1,11 +1,12 @@
 void restart()
 {
   t0 = 0;                            //reset timer
+  ts = 0;
   
   if (play)
   {
     //counA = 0;              //reset counter
-    tdac = 0;
+    tcom = 0;
     
   background(0x735184);
   fill(255);

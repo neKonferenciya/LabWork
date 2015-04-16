@@ -6,12 +6,16 @@
 Подает на выход принятый в п.1 сигнал
 Ожидает новую команду
  */
+ 
+ float b = 0;
+ 
     int code = 0;
-    int dcode = 0;
-    int ADC1 = 0;
-    int ADC2 = 0;
-    int ADC3 = 0;
-    int ADC4 = 0;
+    byte dcode1 = 0;
+    byte dcode2 = 0;
+    byte ADC1 = 0;
+    byte ADC2 = 0;
+    byte ADC3 = 0;
+    byte ADC4 = 0;
 
 // the setup routine runs once when you press reset:
 void setup() 
@@ -27,6 +31,8 @@ void outled(byte C)
 {
  PORTD = (C&DDRB)*16  ;
  PORTB = (C&DDRD)/16  ; 
+ 
+ //pinMode(3,INPUT);
 }  
 
 void loop()
@@ -38,10 +44,14 @@ void loop()
     
   if (Serial.available() > 0)  //если есть входные данные, то начать процесс передачи данных
   {
+    //code = int(b)%255;
+    //b = b+2;
+    
     detachInterrupt(1);
     
-    if (code>255)
-    {dcode = (code%511)-256;}
+    dcode1 = byte(code%255);
+      if (code>255)
+      {dcode2 = int(code/256);}    //   2^16 бит счетчика
       
     byte Data = Serial.read();
   
@@ -49,18 +59,20 @@ void loop()
     Serial.write(ADC2/4);    // Отправка через порт В2
     Serial.write(ADC3/4);    // Отправка через порт В3
     Serial.write(ADC4/4);    // Отправка через порт В4
-    Serial.write(code%255);    // Отправка цифрового байта повышения
-    Serial.write(dcode);    // Отправка цифрового байта понижения
+    Serial.write(dcode1);    // Отправка цифрового байта повышения
+    Serial.write(dcode2);    // Отправка цифрового байта понижения
     
       outled(byte(Data)); //Вывод на цифровой выход принятых данных
       
       code = 0;
-      dcode = 0;
+      dcode1 = 0;
+      dcode2 = 0;
       attachInterrupt(1, encoder, RISING);  //Включить прерывания
     }  
 }
 
 void encoder()          //Инкрементирование отсчет при положительном фронте пин3
-{                    
-    code = ++code; 
+{     
+  if (digitalRead(2)==LOW)
+    { code = code+1; }
 }

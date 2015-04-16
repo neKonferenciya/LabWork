@@ -1,5 +1,7 @@
 float plot_draw(int x0, int y0, int xh, int yh, float A, float Abuf)    //function for painting graphic
 {
+    t = (millis()%(int(float(maxs)*1000)));    //new Time
+  
     if (A>yh)
     {A=yh;}                       //hight limit
         if (A<0)
@@ -14,6 +16,8 @@ float plot_draw(int x0, int y0, int xh, int yh, float A, float Abuf)    //functi
 
 float speed_plot_draw(int x0, int y0, int xh, int yh, float A, float Abuf)    //function for painting graphic
 {
+    t = (millis()%(int(float(maxs)*1000)));    //new Time
+  
     if (A>yh)
     {A=yh;}                       //hight limit
         if (A<0)

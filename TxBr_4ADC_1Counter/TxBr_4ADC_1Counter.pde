@@ -9,10 +9,11 @@ float adc1b = 0;      //global buffer var of ADC
 float adc2b = 0;
 float adc3b = 0;    
 float adc4b = 0;
-float counA = 0;
+int counA = 0;
 float counb = 0;
 float t = 0;        //global var of universal time
 float t0 = 0; 
+float tcom = 0;          //COM-port time-counter
 boolean play = true;
 
 float ts = 0;                        //time for speed_plot
@@ -22,7 +23,6 @@ boolean speed_gr = false;            //draw speed graphic?
 int si = 0;                          //conter of bufer 
 
 int Udac = 0;            //DAC-voltag
-float tdac = 0;          //DAC time-counter
 
 void setup()
 {      
@@ -35,12 +35,12 @@ void draw()        //main body
 {
   if (play)
   {
-  
-  t = (millis()%(int(float(maxs)*1000)));    //new Time
-  tdac = (float(millis())/1000)%float(maxs);
+  //tdac = (float(millis())/1000)%float(maxs);
   
   float k256 = 256/5;
-  Udac = int(float(A)*k256*sin(float(Om)*tdac+float(B)*tdac*tdac)+(tdac*float(C)*k256*cos(float(Om)*tdac))%256+float(dU)*k256);
+  //t = (millis()%(int(float(maxs)*1000)));
+  t = (float(millis())/1000)%float(maxs);
+  Udac = int(float(A)*k256*sin(float(Om)*t+float(B)*t*t)+(t*float(C)*k256*cos(float(Om)*t))%256+float(dU)*k256);
     if (Udac<0)
     {Udac = 0;};
     if (Udac>256)      //U(DAC) limit
@@ -48,46 +48,46 @@ void draw()        //main body
   
   if (play)
   {                                                    //refresh of text
-  text_canva(adc1*5/256,adc2*5/256,adc3*5/256,adc4*5/256);  
+  text_canva(adc1/k256,adc2/k256,adc3/k256,adc4/k256);  
   adc1b = plot_draw(10,5,640,150,adc1*(1/float(s1))*150/256,adc1b);
   adc2b = plot_draw(660,5,640,150,adc2*(1/float(s2))*150/256,adc2b);
   adc3b = plot_draw(10,200,640,150,adc3*(1/float(s3))*150/256,adc3b);
   adc4b = plot_draw(660,200,640,150,(Udac*(1/float(s4))*150/256),adc4b);
- 
- speedbuf[si] = (1000*bufC/float(rot))/(t-t0);
+                                                         
  si++;
- if (si==4)
+ if (si==3)
   {
- speed = ((speedbuf[0])+(speedbuf[1])+(speedbuf[2])+(speedbuf[3])+(speedbuf[4]))/5;
+ speed = ((speedbuf[0])+(speedbuf[1])+(speedbuf[2])+(speedbuf[3])+(speedbuf[4]))/4;
  si = 0;
  speed_gr = true;
  }
  
     if (countb)
-      {counb = plot_draw(660,400,640,150,(-(counA%512)*150/512),counb);}            //Only positiv counter-plot
+      {counb = plot_draw(660,400,640,150,((counA%512)*150/512),counb);}            //Only positiv counter-plot
     else
     {  
       if (speed_gr)
       {
-      speedb = speed_plot_draw(660,400,640,150,(-speed*150/100),speedb);        //Show speed-plot (scale +/- 50 rot by sec)
+      speedb = speed_plot_draw(660,400,640,150,(speed*150/100),speedb);        //Show speed-plot (scale +/- 50 rot by sec)
       speed_gr = false;
       
-        if ((t/1000)*640/float(maxs)>(640-10))
-        {ts = ts - 1000*float(maxs)+150;}
-        else
-        {ts = t;}
+        //if ((t/1000)*640/float(maxs)>(640-10))
+        //{ts = ts - 1000*float(maxs)+150;}
+        //else
+        ts = t;
       }
     }
-  }
+  } 
  
-     
- if (millis()%10 <= 5)
- { com_talk();  }   
-     t0 = t;                               //old Time
+     t = (millis()%(int(float(maxs)*1000)));              //time NOW
+     speedbuf[si] = (1000*float(bufC)/float(rot))/(t-tcom);      text(t-tcom,380,190);
+                                
+     tcom = (millis()%(int(float(maxs)*1000)));                  // Time ZONE
+     { com_talk();  }      
+     t0 = t;     
  
-   if ((float(maxs)*1000-(millis()%int(float(maxs)*1000)))<=20)
-  {  
-    restart(); }                        //  time for restart
+      if ((float(maxs)*1000-t)<=50)
+     { restart(); }                        //  time for restart                       //  time for restart 
   }  
     
   sb1 = textrect(50, 170,80,25,s1,sb1,"k1=");    //enter correct koeff.
@@ -97,7 +97,7 @@ void draw()        //main body
   rotb = textrect(720, 560,80,25,rot,rotb,"rot=");
   timb = textrect(50, 400,80,25,maxs,timb,"T=");
   countb = rotor(1100, 560,80,25,countb,"СЧЕТЧИК");
-  Ab = textrect(500, 380,80,25,A,Ab,"A=");        //SIN options input
+  Ab = textrect(500, 380,80,25,A,Ab,"A=");            //SIN options input
   Bb = textrect(500, 420,80,25,B,Bb,"B=");
   Cb = textrect(500, 460,80,25,C,Cb,"C=");
   dUb = textrect(500, 500,80,25,dU,dUb,"U0=");
