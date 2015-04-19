@@ -37,10 +37,10 @@ void outled(byte C)
 
 void loop()
   {
-    ADC1 = analogRead(A0);  // Запись АЦП0
-    ADC2 = analogRead(A1);  // Запись АЦП1
-    ADC3 = analogRead(A2);  // Запись АЦП2
-    ADC4 = analogRead(A3);  // Запись АЦП2
+    ADC1 = (analogRead(A0))/4;  // Запись АЦП0
+    ADC2 = (analogRead(A1))/4;  // Запись АЦП1
+    ADC3 = (analogRead(A2))/4;  // Запись АЦП2
+    ADC4 = (analogRead(A3))/4;  // Запись АЦП2
     
   if (Serial.available() > 0)  //если есть входные данные, то начать процесс передачи данных
   {
@@ -55,10 +55,10 @@ void loop()
       
     byte Data = Serial.read();
   
-    Serial.write(ADC1/4);    // Отправка через порт В0
-    Serial.write(ADC2/4);    // Отправка через порт В2
-    Serial.write(ADC3/4);    // Отправка через порт В3
-    Serial.write(ADC4/4);    // Отправка через порт В4
+    Serial.write(ADC1);    // Отправка через порт В0
+    Serial.write(ADC2);    // Отправка через порт В2
+    Serial.write(ADC3);    // Отправка через порт В3
+    Serial.write(ADC4);    // Отправка через порт В4
     Serial.write(dcode1);    // Отправка цифрового байта повышения
     Serial.write(dcode2);    // Отправка цифрового байта понижения
     
