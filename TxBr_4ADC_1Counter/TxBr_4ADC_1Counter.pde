@@ -43,8 +43,8 @@ void draw()        //main body
   Udac = int(float(A)*k256*sin(float(Om)*t+float(B)*t*t)+(t*float(C)*k256*cos(float(Om)*t))%256+float(dU)*k256);
     if (Udac<0)
     {Udac = 0;};
-    if (Udac>256)      //U(DAC) limit
-    {Udac = 256;}
+    if (Udac>255)      //U(DAC) limit
+    {Udac = 255;}
   
   if (play)
   {                                                    //refresh of text
@@ -57,7 +57,7 @@ void draw()        //main body
  si++;
  if (si==3)
   {
- speed = ((speedbuf[0])+(speedbuf[1])+(speedbuf[2])+(speedbuf[3])+(speedbuf[4]))/4;
+ speed = ((speedbuf[0])+(speedbuf[1])+(speedbuf[2])+(speedbuf[3]))/4;
  si = 0;
  speed_gr = true;
  }

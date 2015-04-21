@@ -5,7 +5,7 @@ void com_talk()          //talking with COM-port
     bufC = 0;
     
     COMport.write(Udac);
-    delay(20);
+    delay(2);
     adc1 = COMport.read();
     adc2 = COMport.read(); 
     adc3 = COMport.read(); 

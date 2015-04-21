@@ -21,19 +21,17 @@
 void setup() 
 {
   Serial.begin(115200);
-  DDRB = B00001111;  //пины порт В на выход (пины 8-11)
-  DDRD = B11110000;  //пины порт D на выход (пины 4-7)
+//  DDRB = B00001111;  //пины порт В на выход (пины 8-11)
+//  DDRD = B11110000;  //пины порт D на выход (пины 4-7)
   
   attachInterrupt(1, encoder, RISING);  //Включить прерывания по int1
 }
 
-void outled(byte C)
-{
- PORTD = (C&DDRB)*16  ;
- PORTB = (C&DDRD)/16  ; 
- 
- //pinMode(3,INPUT);
-}  
+//void outled(byte C)
+//{
+// PORTD = (C&DDRB)*16  ;
+// PORTB = (C&DDRD)/16  ; 
+//}  
 
 void loop()
   {
@@ -44,8 +42,6 @@ void loop()
     
   if (Serial.available() > 0)  //если есть входные данные, то начать процесс передачи данных
   {
-    //code = int(b)%255;
-    //b = b+2;
     
     detachInterrupt(1);
     
@@ -62,7 +58,8 @@ void loop()
     Serial.write(dcode1);    // Отправка цифрового байта повышения
     Serial.write(dcode2);    // Отправка цифрового байта понижения
     
-      outled(byte(Data)); //Вывод на цифровой выход принятых данных
+      //outled(byte(Data)); //Вывод на цифровой выход принятых данных
+      analogWrite(11,Data);  // Выход на ШИМ
       
       code = 0;
       dcode1 = 0;
