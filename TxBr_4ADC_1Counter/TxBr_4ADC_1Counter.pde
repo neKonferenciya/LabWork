@@ -83,7 +83,7 @@ void draw()        //main body
   } 
  
      t = (millis()%(int(float(maxs)*1000)));              //time NOW
-     speedbuf[si] = (1000*float(bufC)/float(rot))/(t-tcom);      text(t-tcom,380,190);
+     speedbuf[si] = (1000*float(bufC)/float(rot))/(t-tcom);     
                                 
      tcom = (millis()%(int(float(maxs)*1000)));                  // Time ZONE
      { com_talk();  }      
