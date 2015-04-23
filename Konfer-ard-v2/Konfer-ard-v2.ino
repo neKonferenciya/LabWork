@@ -38,7 +38,7 @@ void loop()
     ADC1 = (analogRead(A0))/4;  // Запись АЦП0
     ADC2 = (analogRead(A1))/4;  // Запись АЦП1
     ADC3 = (analogRead(A2))/4;  // Запись АЦП2
-    ADC4 = (analogRead(A3))/4;  // Запись АЦП2
+    ADC4 = (analogRead(A4))/4;  // Запись АЦП2
     
   if (Serial.available() > 0)  //если есть входные данные, то начать процесс передачи данных
   {
@@ -59,7 +59,7 @@ void loop()
     Serial.write(dcode2);    // Отправка цифрового байта понижения
     
       //outled(byte(Data)); //Вывод на цифровой выход принятых данных
-      analogWrite(11,Data);  // Выход на ШИМ
+      analogWrite(6,Data);  // Выход на ШИМ
       
       code = 0;
       dcode1 = 0;

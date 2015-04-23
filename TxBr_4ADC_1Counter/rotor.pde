@@ -1,4 +1,3 @@
-boolean countb = false; 
 float speed = 0;
 float speedb = 0;
 float dcount = 0;

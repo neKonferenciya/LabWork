@@ -4,7 +4,7 @@ void text_canva(float num1, float num2, float num3, float num4)      //function 
  noStroke();         //no "abris"
  rect (20,155,1300,40);  //paint rect
  rect (20,355,1300,40);
- rect (840,595,1300,-40);
+ rect (840,625,1300,-40);
  rect (190,485,200,-55);
  fill(255);          //color of text
  textSize(20);       
@@ -13,9 +13,9 @@ void text_canva(float num1, float num2, float num3, float num4)      //function 
  text("ADC3= "+float(round(num3*1000))/1000+" x"+s3, 200, 380);  
  text("ADC4= "+float(round(num4*1000))/1000+" x"+s4, 850, 380);  
      if (countb)
-     {text("Counter= "+counA, 850, 580); }
+     {text("Counter= "+counA, 850, 610); }
      else
-     {text("Speed= "+float(round(speed*1000))/1000, 850, 580);}
+     {text("Speed= "+float(round(speed*1000))/1000, 850, 610);}
 }
 //
   // 

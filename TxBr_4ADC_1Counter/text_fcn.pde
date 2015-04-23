@@ -57,3 +57,19 @@ boolean textrect(int x, int y, int xh, int yh, String s, boolean sb, String comm
   
   return sb;
 }
+
+void button(int x, int y, int dx, int dy, String s)
+{
+    fill(#735184); 
+  stroke(255);
+  rect(x,y,dx,dy);
+  if ((mouseX>=x)&&(mouseX<=x+dx)&&(mouseY>y)&&(mouseY<=y+dy))
+  {
+  fill(#806b2a);               //Block of rect
+  rect(x,y,dx,dy);
+  }
+  
+  fill(255);
+  textSize(15);                         //Block of output text
+  text(s, x+5, y+16);
+}
