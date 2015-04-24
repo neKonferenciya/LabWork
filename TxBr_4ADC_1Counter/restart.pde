@@ -17,8 +17,7 @@ void restart()
   text("ПС2-81, МВТУ", 10, 615);
   text("Serial: "+Serial.list()[2], 10, 573);
   
-  fill(0);
-  text("ЦАП: U(t) = "+A+"*sin( "+Om+"*t+"+B+"*t*t) + "+C+"*t*cos("+Om+"*t) + "+dU,750,410); 
+  text("ЦАП: U(t) = "+A+"*sin( "+Om+"*t+"+B+"*t*t) + "+C+"*t*cos("+Om+"*t) + "+dU,750,415); 
   
   plot_grid(10,5,640,150,1);          // make a plotgrids
   plot_grid(660,5,640,150,1);

@@ -18,6 +18,12 @@ float t0 = 0;
 float tcom = 0;          //COM-port time-counter
 boolean play = true;
 
+float tphase = 0;      //time to phase
+float phase = 0;
+float maxdac = 0;
+float maxspeed = 0;
+float maxsum = 0;
+
 float ts = 0;                        //time for speed_plot
 int bufC = 0;                        //bufer for counter
 float[] speedbuf = new float[5];     //bufer for speed
@@ -82,16 +88,30 @@ void draw()        //main body
     }
   } 
  
-     t = (millis()%(int(float(maxs)*1000)));              //time NOW
+     t = (millis()%(int(float(maxs)*1000)));                    //time NOW
      speedbuf[si] = (1000*float(bufC)/float(rot))/(t-tcom);     
                                 
      tcom = (millis()%(int(float(maxs)*1000)));                  // Time ZONE
      { com_talk();  }      
-     t0 = t;     
+     t0 = t;  
  
       if ((float(maxs)*1000-t)<=50)
      { restart(); }                        //  time for restart                       //  time for restart 
   }  
+    
+    if (speed>maxspeed)
+    {maxspeed = speed;}
+    if (Udac>int(maxdac))                                        // Phase-metr
+    {maxdac = float(Udac);}
+    if ((speed+Udac)>maxsum)
+    {maxsum = speed+float(Udac);}
+    if ((t-tphase)>2*3.14/float(Om))                  
+       {
+         phase = (acos(((maxsum*maxsum)-(maxdac*maxdac)-(maxspeed*maxspeed))/(2*maxdac*maxspeed)))*180/3.14;
+         tphase = (millis()%(int(float(maxs)*1000))); 
+         fill(255);
+       }      
+     text("Фаза = "+phase,1170,380);  
     
   sb1 = textrect(50, 170,80,25,s1,sb1,"k1=");    //enter correct koeff.
   sb2 = textrect(700, 170,80,25,s2,sb2,"k2=");
