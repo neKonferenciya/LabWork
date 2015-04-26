@@ -105,13 +105,12 @@ void draw()        //main body
     {maxdac = float(Udac);}
     if ((speed+Udac)>maxsum)
     {maxsum = speed+float(Udac);}
-    if ((t-tphase)>2*3.14/float(Om))                  
+    if ((t-tphase)/1000>2*3.14/float(Om))                  
        {
          phase = (acos(((maxsum*maxsum)-(maxdac*maxdac)-(maxspeed*maxspeed))/(2*maxdac*maxspeed)))*180/3.14;
          tphase = (millis()%(int(float(maxs)*1000))); 
-         fill(255);
        }      
-     text("Фаза = "+phase,1170,380);  
+       text("Фаза = "+phase,1170,380);
     
   sb1 = textrect(50, 170,80,25,s1,sb1,"k1=");    //enter correct koeff.
   sb2 = textrect(700, 170,80,25,s2,sb2,"k2=");
