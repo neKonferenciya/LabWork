@@ -103,7 +103,6 @@ void draw()        //main body
   }  
     
 
-
     if (speed>maxspeed)
     {maxspeed = speed;}
     if (speed<minspeed)
@@ -139,7 +138,6 @@ void draw()        //main body
   timb = textrect(50, 400,80,25,maxs,timb,"T=");
   
   rotb = textrect(720, 590,80,25,rot,rotb,"rot=");
-  //countb = rotor(1100, 590,80,25,countb,"СЧЕТЧИК");
   
   Ab = textrect(500, 380,80,25,A,Ab,"U1=");  //SIN options input
   Omb = textrect(500, 420,80,25,Om,Omb,"W1=");
