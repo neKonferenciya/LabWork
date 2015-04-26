@@ -5,8 +5,7 @@ void restart()
   
   if (play)
   {
-    //counA = 0;              //reset counter
-    tcom = 0;
+    tcom = 0;     //reset counter
     
   background(0x735184);
   fill(255);

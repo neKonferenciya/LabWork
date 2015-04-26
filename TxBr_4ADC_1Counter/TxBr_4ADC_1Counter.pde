@@ -19,10 +19,13 @@ float tcom = 0;          //COM-port time-counter
 boolean play = true;
 
 float tphase = 0;      //time to phase
-float phase = 0;
+int phase = 0;
 float maxdac = 0;
 float maxspeed = 0;
+float mindac = 500;
+float minspeed = 500;
 float maxsum = 0;
+float minsum = 1000;    //var for phase
 
 float ts = 0;                        //time for speed_plot
 int bufC = 0;                        //bufer for counter
@@ -68,7 +71,7 @@ void draw()        //main body
  si++;
  if (si==3)
   {
- speed = ((speedbuf[0])+(speedbuf[1])+(speedbuf[2])+(speedbuf[3]))/4;
+ speed = ((speedbuf[0])+(speedbuf[1])+(speedbuf[2])+(speedbuf[3]))/4; 
  si = 0;
  speed_gr = true;
  }
@@ -96,20 +99,37 @@ void draw()        //main body
      t0 = t;  
  
       if ((float(maxs)*1000-t)<=50)
-     { restart(); }                        //  time for restart                       //  time for restart 
+     { restart(); }                        //  time for restart           
   }  
     
+
+
     if (speed>maxspeed)
     {maxspeed = speed;}
+    if (speed<minspeed)
+    {minspeed = speed;}
     if (Udac>int(maxdac))                                        // Phase-metr
     {maxdac = float(Udac);}
+    if (Udac<int(mindac))                                        // Phase-metr
+    {mindac = float(Udac);}
     if ((speed+Udac)>maxsum)
     {maxsum = speed+float(Udac);}
-    if ((t-tphase)/1000>2*3.14/float(Om))                  
+    if ((speed+Udac)<minsum)
+    {minsum = speed+float(Udac);}  
+    t = (millis()); 
+    if ((t-tphase)/1000>2*3.14/float(Om))                      //get phase                
        {
-         phase = (acos(((maxsum*maxsum)-(maxdac*maxdac)-(maxspeed*maxspeed))/(2*maxdac*maxspeed)))*180/3.14;
-         tphase = (millis()%(int(float(maxs)*1000))); 
-       }      
+         phase = round((acos(((maxsum-minsum)*(maxsum-minsum)-(maxdac-mindac)*(maxdac-mindac)-(maxspeed-minspeed)*(maxspeed-minspeed))/(2*(maxdac-mindac)*(maxspeed-minspeed))))*180/3.14);
+         tphase = (millis()); 
+         maxdac = 0;
+         maxspeed = 0;
+         mindac = 500;                                         //return default
+         minspeed = 500;
+         maxsum = 0;
+         minsum = 1000;
+       }  
+       fill(255);          //color of text
+       textSize(20);
        text("Фаза = "+phase,1170,380);
     
   sb1 = textrect(50, 170,80,25,s1,sb1,"k1=");    //enter correct koeff.
