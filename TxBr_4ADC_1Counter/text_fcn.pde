@@ -11,13 +11,13 @@ boolean rotb = false;
 String maxs = "5";           //max second limite
 boolean timb = false;     
 
-String A = "2";        //SIN options
+String A = "1";        //SIN options
 boolean Ab = false;
 String B = "0";
 boolean Bb = false;
 String C = "0";
 boolean Cb = false;
-String dU = "2.5";
+String dU = "4";
 boolean dUb = false;
 String Om = "3.14";
 boolean Omb = false;

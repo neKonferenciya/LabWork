@@ -4,9 +4,8 @@ void restart()
   ts = 0;
   
   if (play)
-  {
-    tcom = 0;     //reset counter
-    
+  {   
+    tcom = 0;     //reset counter 
   background(0x735184);
   fill(255);
   textSize(15);
@@ -14,7 +13,7 @@ void restart()
   text("ESC для ВЫХОДА", 10, 540);  //ESC for exit
   text("HandMade by TxBr", 10, 600);
   text("ПС2-81, МВТУ", 10, 615);
-  text("Serial: "+Serial.list()[2], 10, 573);
+  text("Serial: "+Serial.list()[setserial], 10, 573);
   
   text("ЦАП: U(t) = "+A+"*sin( "+Om+"*t+"+B+"*t*t) + "+C+"*t*cos("+Om+"*t) + "+dU,750,415); 
   

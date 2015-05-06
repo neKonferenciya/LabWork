@@ -21,8 +21,6 @@
 void setup() 
 {
   Serial.begin(115200);
-//  DDRB = B00001111;  //пины порт В на выход (пины 8-11)
-//  DDRD = B11110000;  //пины порт D на выход (пины 4-7)
   
   attachInterrupt(1, encoder, RISING);  //Включить прерывания по int1
 }
