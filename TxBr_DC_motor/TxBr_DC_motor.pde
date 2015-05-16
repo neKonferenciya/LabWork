@@ -6,9 +6,9 @@ Serial COMport;
 int setserial = 0;
 
 float adc1 = 0;      //global var of ADC
-float adc2 = 0;
-float adc3 = 0;    
-float adc4 = 0;
+float adc21 = 0;
+float adc22 = 0;    
+float adc3 = 0;
 float adc1b = 0;      //global buffer var of ADC
 float adc2b = 0;
 float adc3b = 0;    
@@ -23,7 +23,7 @@ float tcom = 0;          //COM-port time-counter
 boolean play = false;
 
 float tphase = 0;      //time to phase
-int phase = 0;
+float phase = 0;
 int bphase = 0;
 
 float maxdac = 0;
@@ -63,6 +63,7 @@ void draw()        //main body
   {
   
   float k256 = 256/5;
+  float k1024 = 1024/5;
   t = (float(millis())/1000)%float(maxs);
   Udac = int(float(A)*k256*sin(float(Om)*t+float(B)*t*t)+(t*float(C)*k256*cos(float(Om)*t))%256+float(dU)*k256);
     if (Udac<0)
@@ -73,15 +74,15 @@ void draw()        //main body
   
   if (play)
   {                                                    //refresh of text
-  text_canva(adc1/k256,adc2/k256,adc3/k256,adc4/k256);  
-  adc1b = plot_draw(10,5,640,150,adc1*(1/float(s1))*150/256,adc1b,#ff2400);
-  adc2b = plot_draw(660,5,640,150,adc2*(1/float(s2))*150/256,adc2b,#ff2400);
-  adc3b = plot_draw(10,200,640,150,adc3*(1/float(s3))*150/256,adc3b,#ff2400);
+  text_canva(adc1/k256,adc21/k1024,adc3/k256,phase);  
+  adc1b = plot_draw(10,5,640,150,adc1*(1)*150/256,adc1b,#ff2400);
+  adc2b = plot_draw(660,5,640,150,adc21*(1/float(s2))*150/1024,adc2b,#ff2400);          //change
+  adc3b = plot_draw(10,200,640,150,adc3*(1)*150/256,adc3b,#ff2400);
   if (dac_gr)
   { adc4b = plot_draw(660,200,640,150,(Udac*(1/float(s4))*150/256),adc4b,#ff2400);
      bphase = int(plot_draw(660,200,640,150,((phase))*150/180,bphase,#0000ff)); }
   else
-  { adc4b = plot_draw(660,200,640,150,(adc4*(1/float(s4))*150/256),adc4b,#ff2400); }
+  { /*adc4b = plot_draw(660,200,640,150,(adc4*(1/float(s4))*150/256),adc4b,#ff2400);*/ }
                                                          
  si++;
  if (si==4)
@@ -134,8 +135,7 @@ void draw()        //main body
     t = (millis()); 
     if ((t-tphase)/1000>2*3.14/(float(Om)))                      //get phase                
        {
-         phase = round((acos(((maxsum-minsum)*(maxsum-minsum)-(maxdac-mindac)*(maxdac-mindac)-(maxspeed-minspeed)*(maxspeed-minspeed))/(2*(maxdac-mindac)*(maxspeed-minspeed))))*180/3.14);
-         phase = (phase+bphase)/2;
+         phase = ((acos(((maxsum-minsum)*(maxsum-minsum)-(maxdac-mindac)*(maxdac-mindac)-(maxspeed-minspeed)*(maxspeed-minspeed))/(2*(maxdac-mindac)*(maxspeed-minspeed))))*180/3.14);
          tphase = (millis()); 
          maxdac = 0;
          maxspeed = 0;
@@ -148,8 +148,7 @@ void draw()        //main body
        textSize(20);
        if (play)
        {
-         text("Фаза = "+phase,1190,370);
-         text("T = "+float(round((float(millis())/1000)%float(maxs)*100))/100,1190,390);
+         text("T = "+float(round((float(millis())/1000)%float(maxs)*100))/100,1190,380);
        }
     
   sb1 = textrect(50, 170,80,25,s1,sb1,"k1=");    //enter correct koeff.

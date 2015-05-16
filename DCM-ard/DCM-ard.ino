@@ -7,15 +7,14 @@
 Ожидает новую команду
  */
  
- float b = 0;
- 
     int code = 0;
     byte dcode1 = 0;
     byte dcode2 = 0;
     byte ADC1 = 0;
-    byte ADC2 = 0;
+    int ADC2 = 0;
+    byte ADC21 = 0;
+    byte ADC22 = 0;
     byte ADC3 = 0;
-    byte ADC4 = 0;
 
 // the setup routine runs once when you press reset:
 void setup() 
@@ -32,16 +31,19 @@ void setup()
 //}  
 
 void loop()
-  {
+  {   
     ADC1 = (analogRead(A0))/4;  // Запись АЦП0
-    ADC2 = (analogRead(A1))/4;  // Запись АЦП1
+    ADC2 = analogRead(A1);      //Запись АЦП1
     ADC3 = (analogRead(A2))/4;  // Запись АЦП2
-    ADC4 = (analogRead(A4))/4;  // Запись АЦП2
     
   if (Serial.available() > 0)  //если есть входные данные, то начать процесс передачи данных
   {
     
     detachInterrupt(0);
+    
+    ADC21 = (ADC2)%256;  // Запись АЦП1 старшая часть
+    if ((ADC2)>255)
+    {ADC22 = (ADC2)/256;}  // Запись АЦП1 младшая часть
     
     dcode1 = byte(code%255);
       if (code>255)
@@ -50,9 +52,9 @@ void loop()
     byte Data = Serial.read();
   
     Serial.write(ADC1);    // Отправка через порт В0
-    Serial.write(ADC2);    // Отправка через порт В2
-    Serial.write(ADC3);    // Отправка через порт В3
-    Serial.write(ADC4);    // Отправка через порт В4
+    Serial.write(ADC21);    // Отправка через порт В2
+    Serial.write(ADC22);    // Отправка через порт В3
+    Serial.write(ADC3);    // Отправка через порт В4
     Serial.write(dcode1);    // Отправка цифрового байта повышения
     Serial.write(dcode2);    // Отправка цифрового байта понижения
     
@@ -62,6 +64,7 @@ void loop()
       code = 0;
       dcode1 = 0;
       dcode2 = 0;
+      ADC22 = 0;
       attachInterrupt(0, encoder, RISING);  //Включить прерывания
     }  
 }
