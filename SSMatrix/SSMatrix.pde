@@ -88,7 +88,7 @@ if (play)
   if (adc2) {s2.viewTextNow( roundn(2,1000) );}   //view ADC2 or..
   else {s2.viewTextNow( roundn(1,1000) );}          // ..or view ADC1
   
-  s3.viewTextNow( roundn(0,1000) );
+  s3.viewTextNow( roundn(0,1000) );                 // Current
   
   if (speed) {s4.viewTextNow( roundn(3,1000) );}    //view speed or counter
   else {s4.viewTextNow( roundn(4,1) );}
@@ -96,10 +96,12 @@ if (play)
   t0=(float(millis())/1000)%Tmax;
   Uadc = 2.5+2.5*sin(1*t0);
   if (phase) {plot1.addpoint(t0,45.4*plot1.dY/180);} //plot PHASE or DAC
-  else {plot1.addpoint(t0,Uadc*plot1.dY/5);} 
+  else {plot1.addpoint(t0,float(k1.s)*Uadc*plot1.dY/5);}  //  =K1*DAC
   
   if (adc2) {plot2.addpoint(t0,2*plot2.dY/5);}  // plot ADC1
   else {plot2.addpoint(t0,1*plot2.dY/5);}       //plot ADC2
+
+  plot3.addpoint(t0,float(k3.s)*plot2.dY/5);    //plot of current
 
   if (speed) {plot4.addpoint(t0,3*plot2.dY/5);}  // plot speed or counter
   else {plot4.addpoint(t0,4*plot2.dY/5);}  
