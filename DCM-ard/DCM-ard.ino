@@ -33,8 +33,8 @@ void setup()
 void loop()
   {   
     ADC1 = (analogRead(A0))/4;  // Запись АЦП0
-    ADC2 = analogRead(A1);      //Запись АЦП1
-    ADC3 = (analogRead(A2))/4;  // Запись АЦП2
+    ADC2 = analogRead(A2);      //Запись АЦП1
+    ADC3 = (analogRead(A1))/4;  // Запись АЦП2
     
   if (Serial.available() > 0)  //если есть входные данные, то начать процесс передачи данных
   {

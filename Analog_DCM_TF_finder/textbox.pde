@@ -30,9 +30,14 @@ public String sb = "e= ";
   text(sb+s,textX+4,textY+textH);
  } 
  
-  public void viewTextNow(float val)
+ 
+  public void viewTextNow(float val, int r, int g, int b)
  {
-   fill(#735184);
+   if ((mouseX>textX)&&(mouseX<textX+(maxsym+sb.length())*15)&&(mouseY<textY+textH+5)&&(mouseY>textY))
+   {fill(r,g,b); use = true;}     //color of rect
+   else
+   {fill(#735184); use = false;} 
+   
    stroke(255,255,200);            //color of stroke
    rect(textX,textY,(maxsym+sb.length())*15,textH+4);
   
@@ -41,9 +46,13 @@ public String sb = "e= ";
   text(sb+val,textX+4,textY+textH);
  } 
  
-   public void viewTextString()
+   public void viewTextString(int r, int g, int b)
  {
-   fill(#735184);
+   if ((mouseX>textX)&&(mouseX<textX+(maxsym+sb.length())*15)&&(mouseY<textY+textH+5)&&(mouseY>textY))
+   {fill(r,g,b); use = true;}     //color of rect
+   else
+   {fill(#735184); use = false;} 
+   
    stroke(255,255,200);            //color of stroke
    rect(textX,textY,s.length()*(0.55*textH)+sb.length()*(0.55*textH),textH+4);
   
