@@ -223,9 +223,9 @@ if (play)
     {restart();  delay(1);}
     
     comTalk();
-    dt= (float(millis())/1000)%float(T.s) - dt;
+    //dt= (float(millis())/1000)%float(T.s) - dt;
     velocity=(bufC)/(/*6.2832*/dt*float(k4.s));                                //found speed rad/sec
-    dt = (float(millis())/1000)%float(T.s);
+    //dt = (float(millis())/1000)%float(T.s);
     
     }    //if play
   }  //else

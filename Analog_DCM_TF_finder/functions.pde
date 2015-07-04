@@ -44,7 +44,9 @@ void comTalk()
  a2 = COMport.read();
  buf1 = COMport.read();
  buf2 = COMport.read();
+ dt = COMport.read();
  
+ dt = dt/1000;
  a3 = a3+a32*255;    //return ADC2
  bufC = buf1+255*buf2; 
  counA += bufC;

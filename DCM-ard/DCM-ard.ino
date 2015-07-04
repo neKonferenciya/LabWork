@@ -3,18 +3,21 @@
 Принимает амплитуду сигнала, который нужно подать на выход
 Считывет АЦП с трех каналов
 Передает эти значения напряжений обратно на ПК
+Считает и передает количество тактов с энкодера
+Считает и передает время выполнения цикла программы
 Подает на выход принятый в п.1 сигнал
 Ожидает новую команду
  */
  
     int code = 0;
-    byte dcode1 = 0;
-    byte dcode2 = 0;
+    int dcode1 = 0;
+    int dcode2 = 0;
     byte ADC1 = 0;
-    int ADC2 = 0;
+    byte ADC2 = 0;
     byte ADC21 = 0;
     byte ADC22 = 0;
     byte ADC3 = 0;
+    byte dt = 0;
 
 // the setup routine runs once when you press reset:
 void setup() 
@@ -49,14 +52,19 @@ void loop()
       if (code>255)
       {dcode2 = int(code/256);}    //   2^16 бит счетчика
       
+    dt = millis() - dt;    // определение разности времени   
+      
     byte Data = Serial.read();
   
     Serial.write(ADC1);    // Отправка через порт В0
     Serial.write(ADC21);    // Отправка через порт В2
     Serial.write(ADC22);    // Отправка через порт В3
     Serial.write(ADC3);    // Отправка через порт В4
-    Serial.write(dcode1);    // Отправка цифрового байта повышения
-    Serial.write(dcode2);    // Отправка цифрового байта понижения
+    Serial.write(dcode1);    // Отправка байта младшего разряда
+    Serial.write(dcode2);    // Отправка байта старшего разряда
+    Serial.write(dt);        //  Отправка дифф. времени
+    
+    dt = millis();          // запись старого значения времени
     
       //outled(byte(Data)); //Вывод на цифровой выход принятых данных
       analogWrite(6,Data);  // Выход на ШИМ
